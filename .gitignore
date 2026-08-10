@@ -1,0 +1,157 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Logs
+*.log
+logs/
+*.out
+
+# SQLite
+*.sqlite3
+db.sqlite3
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Django
+staticfiles/
+media/
+local_settings.py
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Mypy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# =========================
+# Node / Ember
+# =========================
+node_modules/
+bower_components/
+
+tmp/
+temp/
+
+dist/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ember
+.coverage/
+.sass-cache/
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+bin/
+obj/
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# =========================
+# JetBrains
+# =========================
+.idea/
+
+# =========================
+# Windows
+# =========================
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
+# =========================
+# Git
+# =========================
+*.orig
+*.rej
+
+# =========================
+# Certificates / Secrets
+# =========================
+*.pem
+*.key
+*.crt
+*.cer
+*.pfx
+*.p12
+*.jks
+*.keystore
+
+# Secrets
+secrets.json
+appsettings.Development.json
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# =========================
+# IDE Generated
+# =========================
+.history/
+.cache/
+
+# =========================
+# Coverage
+# =========================
+coverage/
+coverage.xml
+*.coverage
+
+# =========================
+# Terraform (if used)
+# =========================
+.terraform/
+*.tfstate
+*.tfstate.*
