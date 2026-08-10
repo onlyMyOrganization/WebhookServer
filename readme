@@ -1,0 +1,224 @@
+# GitHub Webhook Setup
+
+This document explains how to run the webhook server and configure GitHub to trigger a Python deployment script whenever code is pushed to the `main` branch.
+
+---
+
+# Project Structure
+
+```
+WebhookServer/
+│
+├── app.py
+├── config.py
+├── trigger.py
+├── requirements.txt
+│
+├── logs/
+│   └── webhook.log
+│
+└── scripts/
+    └── deploy.ps1
+```
+
+---
+
+# Install Dependencies
+
+Install Flask:
+
+```bash
+pip install -r requirements.txt
+```
+
+or
+
+```bash
+pip install flask
+```
+
+---
+
+# Configuration
+
+Edit `config.py`.
+
+```python
+GITHUB_SECRET = "MySecret123"
+
+DEFAULT_BRANCH = "main"
+
+LOG_FILE = "logs/webhook.log"
+
+DEPLOY_SCRIPT = "scripts/deploy.ps1"
+```
+
+Update:
+
+- `GITHUB_SECRET` with your GitHub webhook secret.
+- `DEFAULT_BRANCH` if your default branch is different.
+- `DEPLOY_SCRIPT` with the path to your deployment script.
+
+---
+
+# Running the Webhook Server
+
+Open a terminal inside the project directory.
+
+```bash
+cd WebhookServer
+python app.py
+```
+
+Expected output:
+
+```
+Running on http://127.0.0.1:5000
+Running on http://<LOCAL_IP>:5000
+```
+
+---
+
+# Expose the Webhook (Local Testing)
+
+Authenticate ngrok (only once):
+
+```bash
+ngrok config add-authtoken <YOUR_AUTHTOKEN>
+```
+
+Start ngrok:
+
+```bash
+ngrok http 5000
+```
+
+Example:
+
+```
+Forwarding
+
+https://abcd123.ngrok-free.app
+
+->
+
+http://localhost:5000
+```
+
+---
+
+# Configure GitHub Webhook
+
+Open your GitHub repository.
+
+```
+Settings
+    ↓
+Webhooks
+    ↓
+Add webhook
+```
+
+Configure the following:
+
+**Payload URL**
+
+```
+https://abcd123.ngrok-free.app/webhook
+```
+
+**Content type**
+
+```
+application/json
+```
+
+**Secret**
+
+```
+MySecret123
+```
+
+(Should match `GITHUB_SECRET` in `config.py`.)
+
+**Events**
+
+```
+Just the push event
+```
+
+Click **Add webhook**.
+
+---
+
+# Verify the Webhook
+
+Open the ngrok URL:
+
+```
+https://abcd123.ngrok-free.app/
+```
+
+Expected response:
+
+```
+Webhook server is running.
+```
+
+Open:
+
+```
+https://abcd123.ngrok-free.app/webhook
+```
+
+Expected response:
+
+```
+405 Method Not Allowed
+```
+
+This is expected because the endpoint accepts only **POST** requests.
+
+---
+
+# Test the Webhook
+
+Push code to the configured branch:
+
+```bash
+git add .
+git commit -m "Webhook Test"
+git push origin main
+```
+
+The webhook will:
+
+1. Receive the GitHub push event.
+2. Verify the request.
+3. Check the branch.
+4. Execute `trigger.py`.
+5. Run the deployment script (`deploy.ps1`).
+
+---
+
+# Useful Commands
+
+Run the webhook server:
+
+```bash
+python app.py
+```
+
+Start ngrok:
+
+```bash
+ngrok http 5000
+```
+
+Push code:
+
+```bash
+git add .
+git commit -m "Webhook Test"
+git push origin main
+```
